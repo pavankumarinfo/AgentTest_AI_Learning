@@ -5,6 +5,8 @@
 This challenge reinforces skills from Sessions 01 and 02 by designing **original prompts** based on real-world themes. Each prompt applies one advanced prompt engineering technique.
 
 ---
+![Prompt_Engineering_Cheatsheet](https://github.com/user-attachments/assets/521fc7c2-6f9b-4ff4-9ff5-fc8a1de42af3)
+
 
 ## 🛠 Scenario
 You are helping a startup launching a new **AI-powered health tracking app**. The app monitors vitals, activity, and sleep — and gives personalized advice.
