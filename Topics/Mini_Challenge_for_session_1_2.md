@@ -1,6 +1,6 @@
 
 # Mini Challenge – Applied Prompt Engineering
-
+ 
 ## 🎯 Objective
 This challenge reinforces skills from Sessions 01 and 02 by designing **original prompts** based on real-world themes. Each prompt applies one advanced prompt engineering technique.
 
