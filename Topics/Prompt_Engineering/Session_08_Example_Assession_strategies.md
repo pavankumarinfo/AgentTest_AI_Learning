@@ -309,6 +309,118 @@ Answer:
 
 ---
 
+
+# Session 08 – Step 6: Prompt Oracles = Test Oracles (LLM as Judge)
+
+**Date**: 2025-07-21  
+**Session**: Deep Dive – AI Testing Concepts ↔ QA Automation  
+**Product**: AgentTest – AI QA Copilot
+
+---
+
+## ✅ Step 6: Prompt Oracles = Test Oracles (LLM as Judge)
+
+In traditional QA, **test oracles** are mechanisms used to determine whether the output of a test is correct.
+
+Examples:
+- A hardcoded expected value (exact match)
+- A validation rule (e.g., output must be non-empty)
+- A reference implementation
+
+In **AI QA**, we need similar logic — but **expected outputs are often fuzzy**. That’s where the concept of a **Prompt Oracle** comes in:
+
+---
+
+## 🔍 Definition: Prompt Oracle
+
+A **Prompt Oracle** is an automated evaluator (often another LLM prompt) that **judges whether the output of a test prompt is correct**, based on criteria like:
+
+- Factual correctness
+- Relevance
+- Style or tone match
+- Consistency with the input
+
+This turns the LLM into both the **subject** and the **evaluator** of a test.
+
+---
+
+### 🧠 Prompt Oracle = Test Oracle (Mapping)
+
+| Traditional QA Oracle | AI QA Equivalent |
+|------------------------|------------------|
+| `assertEqual(expected, actual)` | Match-type: `equals`, `contains`, etc. |
+| `Custom validator fn()`         | Custom LLM evaluator prompt |
+| `Reference model output`        | Evaluation by second LLM |
+| `Visual diff`                   | Embedding similarity or user-facing diff |
+
+---
+
+## 🔁 Example: LLM-as-Judge Prompt
+
+**Judge Prompt Template**:
+
+```text
+You are an expert evaluator. Given the prompt, input, and LLM output, decide if the output satisfies the goal. Respond with YES or NO, and a short reason.
+
+Prompt: {prompt}
+Input: {input}
+Output: {llm_output}
+Goal: {goal}
+```
+
+---
+
+## 🧪 Exercise – Write a Prompt Oracle
+
+### 📘 Prompt Being Tested:
+> “Summarize this medical report in plain English.”
+
+### 📘 Goal:
+> The summary should include key diagnoses, be under 100 words, and avoid medical jargon.
+
+---
+
+### ✅ User Submission
+
+**Original Prompt Oracle**:
+
+```
+Act as prompt evulator and results verifier,  Write me prompts for this medical report and in plain english. Also analysie the prompts generated for this report and provide better understanding of each prompt in 100 words. Also verify the prompt and output are matching the input report document . reply me response with yes or no, when prompt and response are matching correct 100%. All the informaiton shared should be simple plan english.
+```
+
+---
+
+### ✅ Structured Version (Refined for Evaluation)
+
+```
+Act as a prompt evaluator and results verifier. Given a medical report, prompt, and the generated summary, your task is to:
+
+1. Analyze whether the summary matches the input report content.
+2. Ensure the summary uses plain English and avoids medical jargon.
+3. Confirm that the summary includes all key diagnoses and is under 100 words.
+4. Write a simple explanation of your judgment (max 2 sentences).
+5. Answer ONLY with "YES" if the summary meets all criteria, or "NO" otherwise.
+
+Keep your explanation in plain, simple English.
+```
+
+---
+
+### ✅ Feedback on Your Oracle Design
+
+| Section | Feedback |
+|---------|----------|
+| *Evaluator + verifier role* | ✅ Excellent framing — you assigned the right role to the oracle |
+| *Instruction to “write prompts”* | ⚠️ Slight confusion — evaluator should not create prompts, only judge them |
+| *Verification and explanation logic* | ✅ Spot on — you specified a YES/NO evaluation plus plain-English explanation |
+| *Focus on user-friendly output* | ✅ Great — aligning with medical plain-language expectations |
+
+---
+
+✅ **Step 6 Complete**  
+You’ve now fully mapped AI QA ↔ Classical QA across 6 steps. You’re ready to build prompt suites with fixtures, match types, and oracles for real QA automation with LLMs.
+
+
 ✅ **Step 5 complete**  
 Next: Step 6 – Prompt Oracles = Test Oracles (LLM as Judge)
 
