@@ -150,5 +150,117 @@ Requirement: The system must allow users to reset their password using a registe
 
 ---
 
-🧠 Reviewed and structured by: Pavan Kumar  
-🗓️ Date: 2025-07-23
+# Session 09 – Step 4: Feedback Loop Mechanics & Test Memory
+
+📌 This file contains raw, unedited training content including full prompts, inputs, outputs, and feedback.
+
+## 🎯 Goal
+Understand how to:
+- Create feedback loops that improve LLM behavior over time.
+- Store and replay test memory to detect regressions or fine-tune prompts.
+
+---
+
+## 🔍 Core Concepts
+
+### 1. Feedback Loop Design
+
+A feedback loop collects results from test logs and uses them to:
+- Tune prompts
+- Select few-shot examples
+- Build memory-aware AI agents
+
+Each feedback loop entry contains:
+- Observation
+- Evaluation (oracle + assertion)
+- Classification (TP/FP/FN/TN)
+- Response (improve, retry, log pattern)
+
+### 2. Test Memory Storage
+
+Test memories include:
+- Prior prompts, inputs, and verdicts
+- Known failures and edge cases
+- Expected outputs
+
+Can be stored as:
+- JSON logs
+- Vector stores (for semantic memory)
+- YAML snapshots
+
+---
+
+## 🧪 Exercise 1 – Medical Domain (False Negative)
+
+### Raw User Submission
+
+```json
+{
+  "test_id":"01-validate-patient-profile-ALK",
+  "prompt":"Act as medical professional that review paitent profile for patients tumor profile and share summary in 2-3 sentances usign relevant biomarkers. Also review the ALK mutation is being omitted report",
+  "fixture_input":"summary-contains-key-requirements",
+  "llm_output":"for the given input, if the summary missing ALK mutation, system should return tumor is not able to confirm",
+  "oracle_verdit":"fail",
+  "assertion_verdit":"fail",
+  "result_classifaction":"FN",
+  "issue_identified":"ALK mutation is missing from summary",
+  "suggested_fix":"Act as patient information review specialist, verify paitents records and make sure ALK mutation information is captured durign process, gather or ask any inputs are needed",
+  "feedback_action":"record all actions perfomred while analysiing the patient informaiton and store the inputs, outputs, processing time, and attempts done to get right information"
+}
+```
+
+### ✅ Cleaned Feedback Entry
+
+```json
+{
+  "test_id": "01-fn-alk-mutation",
+  "prompt": "Act as a medical professional reviewing a patient's tumor profile. Summarize the case in 2–3 sentences using relevant biomarkers. Ensure ALK mutation is not omitted.",
+  "fixture_input": "Patient profile includes ALK mutation along with EGFR and TP53. Summarize key mutations and tumor type in 2–3 sentences.",
+  "llm_output": "The patient’s profile includes EGFR and TP53 mutations. The tumor shows advanced progression.",
+  "oracle_verdict": "fail",
+  "assertion_verdict": "fail",
+  "result_classification": "FN",
+  "issue_identified": "ALK mutation is missing from the summary.",
+  "suggested_fix": "Rephrase the prompt to explicitly require ALK inclusion, or provide an example that includes ALK to encourage the model to generalize better.",
+  "feedback_action": "Add this case to memory. Tag it as a known failure. In the next few-shot prompt, include a TP example that covers ALK mutation."
+}
+```
+
+---
+
+## 🧪 Exercise 2 – Software Testing Domain (False Negative)
+
+### Raw User Submission
+
+```json
+{
+  "test_id":"01-validate-app-crash-issues",
+  "prompt":"Act as test steps reviewer expert, verify the app open status and also review the file name size of the pdf, record the uploading action and verify if the app has any memory issue or crashing",
+  "fixture_input":"given user uploading pdf file file and its file name length, system missing validation file name length, thrown warning message when file name length is greater than 50 letters including spaces",
+  "oracle_verdit":"fail",
+  "assertion_verdit":"fail",
+  "result_classifaction":"FN",
+  "issue_identified":"LLM need to make sure the PDF filename length and file size that is uploading, need to have configuration setting for limitations",
+  "suggested_fix":"share recommendations for app owner, that there is thresholds/limitation of uploading pdf file name length and file size try to upload, share importance and problems comes around",
+  "feedback_action":"to avoid future issues, record all case sceanrios that happend for both positve and negative user inputs and log all entries and improve the prompts for better application performance"
+}
+```
+
+### ✅ Cleaned Feedback Entry
+
+```json
+{
+  "test_id": "01-validate-app-crash-issues",
+  "prompt": "Extract the test steps from this bug report in a structured list.",
+  "fixture_input": "Bug Title: “App crashes when uploading PDF with long filename”\nDescription: Open the app and go to the upload screen. Select a PDF file whose name is more than 255 characters. Click upload. The app crashes and restarts.\nExpected: App should show a warning if the filename is too long, or handle the upload gracefully.",
+  "llm_output": "1. Open the app\n2. Go to upload screen\n3. Select PDF\n4. Click upload",
+  "oracle_verdict": "fail",
+  "assertion_verdict": "fail",
+  "result_classification": "FN",
+  "issue_identified": "LLM omitted the key condition that the filename was over 255 characters and triggered the crash. It failed to capture the cause.",
+  "suggested_fix": "Clarify the prompt to emphasize the importance of edge-case inputs such as filename length. Add a few-shot example that includes a long filename crash case.",
+  "feedback_action": "Log this as a known edge-case omission. Tag as 'long filename crash'. Add to regression memory. Improve prompt examples to reflect length-based file handling limitations."
+}
+```
+
+---
