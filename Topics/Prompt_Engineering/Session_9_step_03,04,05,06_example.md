@@ -322,3 +322,58 @@ To maximize automation and agent replayability:
 
 
 ---
+
+---
+
+# Session 09 – Step 6: Regression Labels and Replay Heuristics  
+📌 This file contains raw, unedited training content including full prompts, inputs, outputs, and feedback.
+
+---
+
+## 🎯 Training Content
+
+**Step 6 Objectives**
+
+1. Label regressions using structured tags like:
+   - `resolved_in_version`, `false_negative`, `prompt_fixed`, etc.
+2. Define replay heuristics such as:
+   - `skip_if_passing`, `retest_if_prompt_changes`, etc.
+3. Score test case stability using a `confidence_score`
+
+---
+
+## 🧪 Exercise – Label Your Replay Entry
+
+### 🧾 User Input
+
+```json
+{
+  "regression_label": "resolved_in_version",
+  "replay_heuristic": "skip_if_passing",
+  "confidence_score": 6.0,
+  "note": "as this is low priority verfication test case, we can rerun only when regression is initiated or any software new release or code version is releases."
+}
+```
+
+---
+
+## ✅ Feedback
+
+- ⚠️ `confidence_score` must be a float between **0.0 and 1.0** – value `6.0` is invalid
+- ✅ Good use of `replay_heuristic` and `regression_label`
+- ✅ Reasoning was clear and practical – included in final `notes`
+
+---
+
+### 🛠️ Corrected Output
+
+```json
+{
+  "regression_label": "resolved_in_version",
+  "replay_heuristic": "skip_if_passing",
+  "confidence_score": 0.6,
+  "notes": "As this is a low-priority verification test case, we can rerun only when regression is initiated or a new software/code version is released."
+}
+```
+
+---
