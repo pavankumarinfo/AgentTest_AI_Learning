@@ -1,4 +1,4 @@
-## 🧠 Cheatsheet – Session 10: Semantic QA Memory (with Examples)
+## 🧠 Cheatsheet – Session 10 - Step 1 : Semantic QA Memory (with Examples)
 
 | Field | Purpose | Example |
 |-------|---------|---------|
