@@ -356,3 +356,76 @@ collection.add(
 
 ---
 
+# Session 10 – Step 3: Search & Inference  
+📌 This file contains raw, unedited training content including full prompts, inputs, outputs, and feedback.
+
+---
+
+## 🎯 Objective
+
+Design and simulate a search engine that can:
+- Retrieve test cases using **semantic meaning**
+- Filter by metadata such as tags or version
+- Help QA agents reason using **memory of past test logs**
+
+---
+
+## 🧭 Step-by-Step Walkthrough
+
+### 🧠 Search Engine Components
+
+| Component | Role |
+|----------|------|
+| **Vector index** | Stores embedded replay memory |
+| **Metadata filter** | Narrows results by fields like version, tag, verdict |
+| **Query encoder** | Converts natural questions into vectors |
+| **Result ranker** | Orders by similarity or metadata match |
+| **Agent inference** | Optional agent to reason over result set |
+
+---
+
+## 🧪 Exercise 1 – Semantic Query 1
+
+**Query:**  
+> "What are tests on expiry and share me history of this failed and passed within different releases"
+
+✅ Returned Result:
+
+### Matched Test: `02-reset-link-expiry`
+
+- **Intent:** Validates that the reset password link expires correctly after the defined expiration period.
+- **Tags:** `["auth", "expiry", "email", "security"]`
+- **Failure History:**
+  | Version | Verdict |
+  |---------|---------|
+  | v2.0.0 | ❌ FAIL |
+  | v2.0.1 | ✅ PASS |
+- **Fix Version:** v2.0.1
+
+---
+
+## 🧪 Exercise 2 – Semantic Query 2
+
+**Query:**  
+> "List the all failure tests and version number and also reason of failure and if possible, a chart with reason failure and version"
+
+✅ Matched 3 test cases from memory:
+
+| Test ID                     | Version  | Verdict | Reason Label       |
+|----------------------------|----------|---------|--------------------|
+| 01-login-invalid-token     | v2.0.0   | FAIL    | false_negative     |
+| 02-reset-link-expiry       | v2.0.0   | FAIL    | resolved_in_version|
+| 03-reset-link-expired-assertion | v2.0.1   | FAIL    | intent_changed      |
+
+---
+
+### 📊 Chart: Failure Reasons by Version
+
+![Failure Chart](
+<img width="1565" height="989" alt="image" src="https://github.com/user-attachments/assets/a2428283-1389-4b95-992f-ea436f2ff8cd" />)
+
+
+> You can view or download it here: [failure_reasons_by_version.png](sandbox:/mnt/data/failure_reasons_by_version.png)
+
+---
+
