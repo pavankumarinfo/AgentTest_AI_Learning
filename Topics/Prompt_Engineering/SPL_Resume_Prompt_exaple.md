@@ -1,5 +1,14 @@
-# this is the prompt I could use to contine training session from one session to another, with this prompt.
+# Resume Prompt – Session 09 Step 5: Regression Detection and Replay Memory
 
+📌 This file contains raw, unedited training content including full prompts, inputs, outputs, and feedback.
+
+---
+
+## 🎯 Resume Instructions for New Session
+
+Paste the following into a new ChatGPT session to resume where we left off:
+
+```
 🧠 Resume my AI QA Copilot training at Session 09 – Step 5: Regression Detection and Replay Memory.
 
 We paused at the exercise where:
@@ -22,3 +31,9 @@ Also, continue all future .md logs using the following rules:
   📌 This file contains raw, unedited training content including full prompts, inputs, outputs, and feedback.
 - Include full training text, all exercises, my raw inputs, and corrected outputs
 - End every .md file with a **Cheatsheet** section
+```
+
+---
+
+🧠 Prepared by: Pavan Kumar  
+🗓️ Date: 2025-07-24
