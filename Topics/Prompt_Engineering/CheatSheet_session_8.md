@@ -132,6 +132,16 @@ Given a prompt, input, and model output:
 ---
 
 
+## 🧠 Cheatsheet – Step 5: Regression and Replay Memory
+
+| Term | Meaning |
+|------|--------|
+| **Replay Memory** | Stores previous prompt-input-output combinations with verdicts for retesting and validation |
+| **Regression Detected** | A previously passing test now fails in a newer version |
+| **Regression Resolved** | A previously failing test now passes (important to track for history and release notes) |
+| **last_known_verdict** | The outcome from the most recent known execution |
+| **current_verdict** | The outcome from the latest test run |
+| **expected_match_type** | Strategy used to compare LLM output to the test oracle (`exact`, `fuzzy_contains`, etc.) |
 🧠 Compiled by: Pavan Kumar  
 🗓️ Date: 2025-07-21
 
