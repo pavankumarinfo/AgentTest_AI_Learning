@@ -1,4 +1,5 @@
-# Session 10 – Replay Memory as Semantic QA History  
+# Session 10 
+## Step 1 – Replay Memory as Semantic QA History  
 📌 This file contains raw, unedited training content including full prompts, inputs, outputs, and feedback.
 
 ---
