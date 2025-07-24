@@ -1,5 +1,67 @@
 # Session 10 
-## Step 1 – Replay Memory as Semantic QA History  
+
+# Session 10 Plan – Replay Memory as Semantic QA History  
+📌 This file outlines the training plan, steps, and learning outcomes for Session 10 of your AI QA Copilot training.
+
+---
+
+## 🎯 Goal
+
+Convert structured test logs into **searchable, queryable memory** that QA agents can reason over.
+
+---
+
+## ✅ Step-by-Step Plan
+
+### 🔹 Step 1 – Add Semantic Context ✅ *(Completed)*  
+Add the following fields to your replay memory:
+- `intent_description`
+- `semantic_tags`
+- `linked_failures`
+- `fix_version`
+- `failure_history`  
+👉 These turn each test into a **knowledge-rich memory entry**
+
+---
+
+### 🔹 Step 2 – Memory Indexing + Embedding Support  
+- Encode intent, prompts, and output into **vector form**
+- Index logs in a semantic vector store (e.g. FAISS, Chroma)
+- Support natural language queries like:
+  - _“Show me all expiry-related tests that failed in 2.0.x”_
+  - _“What fixed the reset-link issue?”_
+
+---
+
+### 🔹 Step 3 – Search & Inference  
+Build a prototype semantic search across your memory:
+- Filter by test intent, tags, or fix version
+- Enable QA agent to find past failures and correlate fixes
+
+---
+
+### 🔹 Step 4 – Memory-Aware Prompt Chain (Optional Advanced)  
+Chain prompts like:
+- Retrieve failure memory
+- Compare current output
+- Ask agent to explain failure reason or fix from memory
+
+---
+
+## 🧠 Learning Outcomes
+
+By the end of this session, you'll be able to:
+
+| Skill | Description |
+|-------|-------------|
+| **Replay QA Search** | Search test cases by tag, issue, or intent |
+| **Memory Embedding** | Encode logs into semantic vectors |
+| **Failure Lineage** | Track issues across versions semantically |
+| **Agent-Aware History** | Enable QA agent to reason using memory |
+
+---
+
+# Step 1 – Replay Memory as Semantic QA History  
 📌 This file contains raw, unedited training content including full prompts, inputs, outputs, and feedback.
 
 ---
