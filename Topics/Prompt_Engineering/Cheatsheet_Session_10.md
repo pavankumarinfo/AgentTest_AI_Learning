@@ -15,4 +15,22 @@ You now have a memory structure ready for:
 - Historical test impact reporting
 - Agent learning over test logs
 
-Next up: **Memory Indexing + Embedding Support**
+---
+
+# Cheatsheet – Session 10 Step 2: Embedding & Indexing  
+📌 This file contains the summarized key terms and examples for quick reference.
+
+---
+
+## 🧠 Cheatsheet – Step 2: Embedding & Indexing (with Examples)
+
+| Term | Meaning | Example |
+|------|---------|---------|
+| `Embedding` | Vector representing text meaning | `[0.013, -0.022, ..., 0.045]` |
+| `Vector Index` | Database of embeddings for similarity search | `Chroma`, `FAISS` |
+| `Embedding Fields` | Which parts of memory are encoded | `"intent_description"`, `"prompt"`, `"tags"` |
+| `Semantic Query` | Query that searches by meaning | `"tests failing in expiry flow"` |
+| `Failure History` | Time-stamped verdicts | `{"v2.0.0": "FAIL", "v2.0.1": "PASS"}` |
+
+---
+
