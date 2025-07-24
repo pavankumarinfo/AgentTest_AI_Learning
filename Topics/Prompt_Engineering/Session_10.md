@@ -162,3 +162,197 @@ We collaborated field by field using the previous test case: `test_id: 02-reset-
 }
 ```
 
+# Session 10 – Step 2: Memory Indexing + Embedding Support  
+📌 This file contains raw, unedited training content including full prompts, inputs, outputs, and feedback.
+
+---
+
+## 🎯 Objective
+
+Prepare replay memory entries for semantic search by:
+- Creating embedding vectors from key fields
+- Indexing memory into a vector database
+- Supporting natural language queries
+
+---
+
+## 🧱 Embedding Fields Selected
+
+| Field | Included | Reason |
+|-------|----------|--------|
+| `intent_description` | ✅ | Core meaning of the test |
+| `prompt` | ✅ | Often contains testing logic |
+| `semantic_tags` | ✅ | Helps topical grouping |
+| `fix_version` | ✅ | Tracks when issues are resolved |
+| `failure_history` | ✅ | Time-series of verdicts, flattened for context |
+
+---
+
+## 🧾 User-Provided Embedding Input
+
+```txt
+Test Intent: The test intent is to make sure this is verified with new software version v2.0.1  
+Prompt: Act as AI test engineer, make sure this test is recorded with v2.0.1 is passed and have history tracking of preivous and future version releases.  
+Tags: security, regression, smoketest  
+Fix Version: v2.0.1  
+Failure History: v2.0.0 = Fail, v2.0.1 = Pass
+```
+
+---
+
+## 🧠 Embedding Simulation
+
+**Model Used:** `all-MiniLM-L6-v2`  
+**Vector Dimensions:** 384  
+**Simulated Output:**
+```json
+{
+  "embedding_model": "all-MiniLM-L6-v2",
+  "dimensions": 384,
+  "vector_sample": [0.021, -0.108, 0.056, ..., 0.003]
+}
+```
+
+---
+
+## 💾 Vector Indexing Options
+
+| Tool | Type | Notes |
+|------|------|-------|
+| FAISS | Local | Lightweight, fast |
+| Chroma | Local API | Python-native, simple |
+| Weaviate, Pinecone | Cloud | Full-featured but require credentials |
+
+### Sample: Add to Chroma
+
+```python
+import chromadb
+client = chromadb.Client()
+collection = client.create_collection(name="test_logs")
+
+collection.add(
+  documents=[your_input_string],
+  embeddings=[embedding_vector],
+  metadatas=[{"test_id": "02-reset-link-expiry"}],
+  ids=["log_001"]
+)
+```
+
+---
+
+## 🔍 Example Semantic Queries
+
+### 1. _“Show me all tests fixed in v2.0.1”_
+- Embed query
+- Search `fix_version` and `intent_description` fields
+
+### 2. _“Find tests related to expiry or auth that failed last version”_
+- Filter by tags
+- Check `failure_history` for latest verdict = FAIL
+
+### 3. _“What was the last known failure similar to reset link issue?”_
+- Embed phrase
+- Search across `intent_description` + `prompt`
+
+---
+
+## 🧠 Cheatsheet – Step 2: Embedding & Indexing (with Examples)
+
+| Term | Meaning | Example |
+|------|---------|---------|
+| `Embedding` | Vector representing text meaning | `[0.013, -0.022, ..., 0.045]` |
+| `Vector Index` | Database of embeddings for similarity search | `Chroma`, `FAISS` |
+| `Embedding Fields` | Which parts of memory are encoded | `"intent_description"`, `"prompt"`, `"tags"` |
+| `Semantic Query` | Query that searches by meaning | `"tests failing in expiry flow"` |
+| `Failure History` | Time-stamped verdicts | `{"v2.0.0": "FAIL", "v2.0.1": "PASS"}` |
+
+---
+
+You are now ready for **Step 3: Search & Inference** — building logic to query this vector memory with natural language.
+
+
+---
+
+## 🗒️ Full Training Dialogue – Step 2
+
+### 🧠 Objective Recap
+Build support for:
+- Embedding replay memory using sentence transformers or OpenAI APIs
+- Indexing logs in a vector DB (Chroma, FAISS)
+- Searching logs with natural queries
+
+---
+
+### 🧾 Initial Field Inclusion Plan
+
+| Field | Include? | Reason |
+|-------|----------|--------|
+| `intent_description` | ✅ | Core to test’s meaning |
+| `prompt` | ✅ | Contains test logic |
+| `semantic_tags` | ✅ | Groups tests by type |
+| `current_llm_output` | ❌ | Optional |
+| `fix_version` | ❌ (initially) | Not semantically relevant |
+| `failure_history` | ❌ (initially) | Not semantic text |
+
+---
+
+### 🧾 User Change Request
+
+User requested to include:
+- `fix_version`
+- `failure_history`
+
+✅ Plan updated to embed:
+- `intent_description`
+- `prompt`
+- `semantic_tags`
+- `fix_version`
+- `failure_history`
+
+---
+
+### 📝 User Submission – Embedding Input
+
+```txt
+Test Intent: The test intent is to make sure this is verified with new software version v2.0.1  
+Prompt: Act as AI test engineer, make sure this test is recorded with v2.0.1 is passed and have history tracking of preivous and future version releases.  
+Tags: security, regression, smoketest  
+Fix Version: v2.0.1  
+Failure History: v2.0.0 = Fail, v2.0.1 = Pass
+```
+
+---
+
+### 🤖 Embedding Simulation
+
+Model: `all-MiniLM-L6-v2`  
+Output: `[0.021, -0.108, ..., 0.003]`  
+Vector length: 384-dim
+
+---
+
+### 🗃️ Indexing Sample Code (Chroma)
+
+```python
+import chromadb
+client = chromadb.Client()
+collection = client.create_collection(name="test_logs")
+
+collection.add(
+  documents=[your_input_string],
+  embeddings=[embedding_vector],
+  metadatas=[{"test_id": "02-reset-link-expiry"}],
+  ids=["log_001"]
+)
+```
+
+---
+
+### 🧠 Query Examples
+
+1. "Show me all tests fixed in v2.0.1" → match `fix_version`
+2. "Find tests related to expiry/auth that failed last version" → tag + verdict logic
+3. "Last failure like reset link issue" → cosine similarity of `intent_description`
+
+---
+
