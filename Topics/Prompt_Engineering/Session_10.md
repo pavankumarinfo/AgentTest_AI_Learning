@@ -422,7 +422,7 @@ Design and simulate a search engine that can:
 ### 📊 Chart: Failure Reasons by Version
 
 ![Failure Chart](
-<img width="1565" height="989" alt="image" src="https://github.com/user-attachments/assets/a2428283-1389-4b95-992f-ea436f2ff8cd" />)
+<img width="1570" height="976" alt="image" src="https://github.com/user-attachments/assets/3569ebba-a420-499e-aadc-172084bfc711" />
 
 
 > You can view or download it here: [failure_reasons_by_version.png](sandbox:/mnt/data/failure_reasons_by_version.png)
