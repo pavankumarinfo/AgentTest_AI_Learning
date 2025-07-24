@@ -145,3 +145,11 @@ Given a prompt, input, and model output:
 🧠 Compiled by: Pavan Kumar  
 🗓️ Date: 2025-07-21
 
+---
+## 🧠 Cheatsheet – Step 6: Regression Labels and Heuristics
+
+| Field | Purpose |
+|-------|---------|
+| `regression_label` | Tags root cause or fix reason (e.g., `false_negative`, `intent_changed`) |
+| `replay_heuristic` | Defines when test should be replayed |
+| `confidence_score` | Probability that the verdict is accurate (0.0 = unsure, 1.0 = certain) |
