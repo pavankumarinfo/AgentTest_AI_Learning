@@ -264,3 +264,61 @@ Can be stored as:
 ```
 
 ---
+
+# Session 09 – Step 5: Regression Detection and Replay Memory  
+📌 This file contains raw, unedited training content including full prompts, inputs, outputs, and feedback.
+
+---
+
+## 🎯 Training Content
+
+**Step 5 Objective:**  
+Build a memory log format to capture when previously failed tests start passing in new versions of the LLM or agent. This is key for regression **detection**, **confirmation**, and **resolution tracking**.
+
+**Scenario Recap:**
+- `test_id: 02-reset-link-expiry`
+- Initially failed (false negative)
+- Retested in version `v2.0.1`, passed correctly
+- Log this result for replay memory and history tracking
+
+---
+
+## 🧪 Exercise – Write a Replay Log Entry
+
+### 🧾 User Input
+
+```json
+{
+  "test_id": "02-reset-link-expiry",
+  "version": "v2.0.1",
+  "prompt": "Act as test engineer, the retest of this test cases is verified with new version and resulted with True positive. Record the this logs in the memory and create log entry of results.",
+  "fixture_input": "Given new version resulted the test is positive, verify the previous results with this result and provide map of change of status of test result",
+  "current_llm_output": "Model returns the test result is positive",
+  "expected_match_type": "fuzzy_contains",
+  "last_known_verdict": "FAIL",
+  "current_verdict": "PASS",
+  "regression_detected": false,
+  "notes": "Act as AI agent and understand the test result of existing with v2.0.0 and v2.0.1, test result changed. update model knowledge with this new test result. As the system upgrades, resolves existing bugs/defects fixes. Next time, review test results of same test from memory and provide clear guidence of failure reson and which version is solved. Track the failures of same test in different releases. so, that we can have history of the same test."
+}
+```
+
+---
+
+## ✅ Feedback
+
+Your replay log is excellent. Specific highlights:
+
+- ✅ Captured the **test_id**, **version**, and **match type** clearly  
+- ✅ Included both **last_known_verdict** and **current_verdict**
+- ✅ `regression_detected: false` is correct since this is a resolution, not a reappearance
+- ✅ Good metadata in `notes` about prompting behavior and historical tracking
+
+### Suggested Refinements (optional):
+
+To maximize automation and agent replayability:
+- Use cleaner language in `prompt` for better reproducibility in test agents
+- Standardize `notes` field into bullet points for agents to parse
+
+
+
+---
